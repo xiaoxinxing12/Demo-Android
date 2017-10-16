@@ -1,0 +1,72 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="slidingmenu_offset">80dp</dimen>
+    <dimen name="shadow_width">15dp</dimen>
+    <dimen name="common_margin_2">2sp</dimen>
+    <dimen name="common_margin_5">5dp</dimen>
+    <dimen name="common_margin_8">8sp</dimen>
+    <dimen name="common_margin_10">10sp</dimen>
+    <dimen name="common_margin_15">15sp</dimen>
+    <dimen name="common_margin_20">20sp</dimen>
+    <dimen name="common_margin_40">40sp</dimen>
+
+    <dimen name="common_padding_2">2sp</dimen>
+    <dimen name="common_padding_8">8sp</dimen>
+    <dimen name="common_padding_5">5sp</dimen>
+    <dimen name="common_padding_10">10sp</dimen>
+    <dimen name="common_padding_15">15sp</dimen>
+    <dimen name="common_padding_18">18sp</dimen>
+    <dimen name="common_padding_20">20sp</dimen>
+
+    <dimen name="b_font">22sp</dimen>
+    <dimen name="b20_font">20sp</dimen>
+    <dimen name="b18_font">18sp</dimen>
+    <dimen name="b16_font">16sp</dimen>
+    <dimen name="m_font">14sp</dimen>
+    <dimen name="mm_font">13sp</dimen>
+    <dimen name="s_font1">13sp</dimen>
+    <dimen name="s_font">12sp</dimen>
+    <dimen name="ss_font">10sp</dimen>
+    <dimen name="text_order">15sp</dimen>
+    <dimen name="text_title">18sp</dimen>
+
+    <dimen name="widget_height">30dp</dimen>
+    <dimen name="widget_width">50dp</dimen>
+    <dimen name="historyscore_tb">6dp</dimen>
+    <dimen name="max_size">80dp</dimen>
+    <dimen name="spinner_height">45dp</dimen>
+    <dimen name="button_width">100dp</dimen>
+    <dimen name="button_height">40dp</dimen>
+    <dimen name="date_height">43dp</dimen>
+    <dimen name="edit_height">45dp</dimen>
+    <dimen name="editText_height_1">25dp</dimen>
+    <dimen name="iv_width_height">60dp</dimen>
+    <dimen name="height_1">190dp</dimen>
+    <dimen name="height_50">50dp</dimen>
+    <dimen name="height_40">45dp</dimen>
+    <dimen name="height_20">10dp</dimen>
+    <dimen name="height_10">10dp</dimen>
+    <dimen name="height_30">30dp</dimen>
+    <dimen name="mdeia_height_30">30dp</dimen>
+    <dimen name="textSize_40">40sp</dimen>
+    <dimen name="common_padding_13">13dp</dimen>
+    <dimen name="height_36">36dp</dimen>
+    <dimen name="tl_icon_width_height">23dp</dimen>
+    <dimen name="tab_height">54dp</dimen>
+    <dimen name="iv_width_height_40">40dp</dimen>
+
+
+    <dimen name="dragView_textSize">13sp</dimen>
+    <dimen name="common_margin_3">3dp</dimen>
+    <dimen name="my_three_grid_unit">10dp</dimen>
+    <dimen name="my_one_and_a_half_grid_unit">5dp</dimen>
+    <dimen name="login_bg_size">250dp</dimen>
+    <dimen name="play_height">200dp</dimen>
+    <dimen name="bannerHeight">150dp</dimen>
+
+    <dimen name="BasicTextSize">15dp</dimen>
+</resources>

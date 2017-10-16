@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_toolbar"/>
+    <FrameLayout
+        android:id="@+id/fl_content"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/tl_menu" />
+
+    <org.chzz.tablayout.CommonTabLayout
+        android:id="@+id/tl_menu"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        tl:tl_iconHeight="20dp"
+        tl:tl_iconWidth="20dp"
+        tl:tl_indicator_color="#8e8e8e"
+        tl:tl_indicator_height="0dp"
+        tl:tl_textSelectColor="@color/colorPrimary1"
+        tl:tl_textUnselectColor="#8e8e8e"
+        tl:tl_textsize="@dimen/mm_font"
+        tl:tl_underline_color="@color/line_color"
+        tl:tl_underline_gravity="TOP"
+        tl:tl_underline_height="0.5dp" />
+</LinearLayout>
+

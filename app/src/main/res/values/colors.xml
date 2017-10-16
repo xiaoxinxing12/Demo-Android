@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3da1ff</color>
+    <color name="colorPrimaryDark">#369bfa</color>
+    <color name="colorAccent">#369bfa</color>
+    <color name="white">#FFFFFF</color>
+    <color name="line_color">#c2c2c2</color>
+
+    <color name="rectangular_line">#B5B5B5</color>
+    <color name="colorPrimary1">#3da1ff</color>
+</resources>
