@@ -53,7 +53,7 @@ public class MyWebView extends BaseActivity implements CommonRecyclerAdapter.IFi
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         etUrl.setText(url);
-        mTitle.setText("领红包助手");
+        mTitle.setText("饱了吧红包助手");
         account.add(new AccountEntity.DataEntity("3582207650", "a12345679", "copys"));
         account.add(new AccountEntity.DataEntity("2165702506", "a12345679", "copys1"));
         account.add(new AccountEntity.DataEntity("2655967705", "a12345679", "copys2"));
