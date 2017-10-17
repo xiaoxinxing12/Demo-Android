@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:name=".APP"
         android:theme="@style/AppBaseTheme">
-        <activity android:name=".view.activity.MyWebView">
+        <activity android:name=".view.activity.WebViewT">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

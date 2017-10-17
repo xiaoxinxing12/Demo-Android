@@ -5,9 +5,15 @@ import android.os.Message;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 
+import com.tencent.smtt.sdk.CacheManager;
+import com.tencent.smtt.sdk.CookieManager;
+import com.tencent.smtt.sdk.CookieSyncManager;
+
 import org.chzz.demo.R;
 import org.chzz.demo.common.BaseActivity;
 import org.chzz.demo.uitl.WebViewUtils;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -100,4 +106,30 @@ public class WebViewT extends BaseActivity {
             Log.i("html", html);
         }
     }
+    @Override
+    public void onDestroy() {
+        CookieSyncManager.createInstance(this);  //Create a singleton CookieSyncManager within a context
+        CookieManager cookieManager = CookieManager.getInstance(); // the singleton CookieManager instance
+        cookieManager.removeAllCookie();// Removes all cookies.
+        CookieSyncManager.getInstance().sync(); // forces sync manager to sync now
+
+        mWebView.setWebChromeClient(null);
+        mWebView.setWebViewClient(null);
+        mWebView.getSettings().setJavaScriptEnabled(false);
+        mWebView.clearCache(true);
+        mWebView.clearFormData();
+        File file = CacheManager.getCacheFileBaseDir();
+        if (file != null && file.exists() && file.isDirectory()) {
+            for (File item : file.listFiles()) {
+                item.delete();
+            }
+            file.delete();
+        }
+        deleteDatabase("webview.db");
+        deleteDatabase("webviewCache.db");
+
+        super.onDestroy();
+    }
+
+
 }
