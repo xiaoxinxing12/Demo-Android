@@ -1,5 +1,7 @@
 package org.chzz.demo.view.activity;
 
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 
@@ -20,7 +22,7 @@ import butterknife.ButterKnife;
 public class WebViewT extends BaseActivity {
     @BindView(R.id.webView)
     com.tencent.smtt.sdk.WebView mWebView;
-
+    private String strJS;
     @Override
     protected void initView() {
         setContentView(R.layout.activity_web);
@@ -45,6 +47,10 @@ public class WebViewT extends BaseActivity {
             @Override
             public boolean shouldOverrideUrlLoading(com.tencent.smtt.sdk.WebView  view, String url) {
                 view.loadUrl(url);
+                if (url.contains("xui.ptlogin2.qq.com")) {
+                    mHandler.sendEmptyMessageDelayed(1, 1000);
+                }
+
                 return true;
             }
 
@@ -62,7 +68,32 @@ public class WebViewT extends BaseActivity {
             }
         });
     }
+    //模拟用户登陆
+    public void LoginByPassword(String username, String password) {
+        strJS = String
+                .format("javascript:document.getElementById('u').value='%s';document.getElementById('p').value='%s';"
+                                + "document.getElementById('go').click();",
+                        username, password);
+        mHandler.sendEmptyMessage(0);
 
+    }
+
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    mWebView.loadUrl(strJS);
+                    break;
+                case 1:
+                    LoginByPassword("3503564905", "a12345679");
+                    break;
+            }
+
+
+            super.handleMessage(msg);
+        }
+    };
     final class InJavaScriptLocalObj {
         @JavascriptInterface
         public void showSource(String html) {

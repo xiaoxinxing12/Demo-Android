@@ -7,10 +7,10 @@
     <include layout="@layout/common_toolbar" />
 
     <LinearLayout
-        android:focusable="true"
-        android:focusableInTouchMode="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:orientation="vertical">
 
         <LinearLayout
@@ -27,6 +27,8 @@
                 android:orientation="horizontal">
 
                 <EditText
+                    android:singleLine="true"
+                    android:id="@+id/et_url"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/common_margin_10"
@@ -66,6 +68,13 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:text="昵称" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:text="账号" />
 
                 <TextView
@@ -73,14 +82,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="密码" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="手机号" />
+                    android:text="红包" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -92,8 +94,23 @@
 
             </LinearLayout>
 
-            <include layout="@layout/item_info_adapter" />
+            <org.chzz.refresh.CHZZRefreshLayout
+                android:id="@+id/refreshLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvData"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:scrollbarSize="3dp"
+                    android:scrollbarStyle="outsideOverlay"
+                    android:scrollbarThumbVertical="@color/colorPrimary"
+                    android:scrollbars="vertical">
+
+                </android.support.v7.widget.RecyclerView>
+            </org.chzz.refresh.CHZZRefreshLayout>
         </LinearLayout>
 
         <View

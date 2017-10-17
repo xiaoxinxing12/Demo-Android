@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:divider="@drawable/vertical_line"
-    android:orientation="vertical"
-    android:showDividers="middle|end">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="@dimen/common_margin_5">
+        android:paddingBottom="@dimen/common_margin_5"
+        android:paddingTop="@dimen/common_margin_5">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_nick"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
@@ -22,7 +22,8 @@
             android:textColor="@color/colorPrimary" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_name"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
@@ -31,124 +32,22 @@
 
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_coupon"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
             android:text="150**11411"
-            android:textColor="@color/colorPrimary" />
+            android:textColor="@android:color/holo_red_dark" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center">
 
             <TextView
                 android:id="@+id/tv_get"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/selector_blue_1"
-                android:paddingBottom="@dimen/common_margin_5"
-                android:paddingLeft="@dimen/common_margin_10"
-                android:paddingRight="@dimen/common_margin_10"
-                android:paddingTop="@dimen/common_margin_5"
-                android:text="领取"
-                android:textColor="@color/white" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="@dimen/common_margin_5">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="152451575"
-            android:textColor="@color/colorPrimary" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="*****"
-            android:textColor="@color/colorPrimary" />
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="150**11411"
-            android:textColor="@color/colorPrimary" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center">
-
-            <TextView
-                android:id="@+id/tv_get1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/selector_blue_1"
-                android:paddingBottom="@dimen/common_margin_5"
-                android:paddingLeft="@dimen/common_margin_10"
-                android:paddingRight="@dimen/common_margin_10"
-                android:paddingTop="@dimen/common_margin_5"
-                android:text="领取"
-                android:textColor="@color/white" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="@dimen/common_margin_5">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="965623215"
-            android:textColor="@color/colorPrimary" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="*****"
-            android:textColor="@color/colorPrimary" />
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="150**11411"
-            android:textColor="@color/colorPrimary" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center">
-
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/selector_blue_1"

@@ -7,20 +7,23 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 
-import com.just.agentwebX5.AgentWebX5;
 import com.tencent.smtt.sdk.CacheManager;
 import com.tencent.smtt.sdk.CookieManager;
 import com.tencent.smtt.sdk.CookieSyncManager;
 
-import org.chzz.core.net.CHZZClient;
-import org.chzz.core.net.callback.Success;
 import org.chzz.demo.R;
 import org.chzz.demo.common.BaseFragment;
+import org.chzz.demo.model.AccountEntity;
+import org.chzz.demo.model.CouponResult;
 import org.chzz.demo.uitl.WebViewUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,12 +38,19 @@ import butterknife.ButterKnife;
 public class WebViewFragment extends BaseFragment {
     @BindView(R.id.webView)
     com.tencent.smtt.sdk.WebView mWebView;
-    protected AgentWebX5 mAgentWebX5;
     String url = "https://h5.ele.me/hongbao/#hardware_id=&is_lucky_group=True&lucky_number=7&track_id=&platform=4&sn=29d2d8d25eabdcde&theme_id=1449&device_id=";
     private String strJS;
-    private boolean isGRT;
-    String a = "https://h5.ele.me/hongbao/#hardware_id=&is_lucky_group=True&lucky_number=7&track_id=&platform=4&sn=29d2d8d25eabdcde&theme_id=1449&device_id=?code=C4A904384DF7012A3FF083D8F854521E";
+    private boolean isGRT=false;
     private String userName, passWord;
+    CouponResult couponResult;
+    private boolean isResult=true;
+
+    public WebViewFragment() {
+    }
+
+    public WebViewFragment(CouponResult couponResult) {
+        this.couponResult = couponResult;
+    }
 
     public void setInfo(String userName, String passWord) {
         this.userName = userName;
@@ -56,8 +66,8 @@ public class WebViewFragment extends BaseFragment {
 
     @Override
     protected void setListener() {
-
         startGather(url);
+
     }
 
     /**
@@ -71,9 +81,9 @@ public class WebViewFragment extends BaseFragment {
 
             @Override
             public void onPageFinished(com.tencent.smtt.sdk.WebView view, String url) {
-//                view.loadUrl("javascript:window.local_obj.showSource('<symbol>'+"
-//                        + "document.getElementsByTagName('*')[0].innerHTML+'</symbol>');");
-                view.loadUrl("javascript:window.local_obj.showSource(document.body.innerHTML);");
+                view.loadUrl("javascript:window.local_obj.showSource('<symbol>'+"
+                        + "document.getElementsByTagName('*')[0].innerHTML+'</symbol>');");
+                //  view.loadUrl("javascript:window.local_obj.showSource(document.body.innerHTML);");
                 super.onPageFinished(view, url);
             }
 
@@ -82,8 +92,8 @@ public class WebViewFragment extends BaseFragment {
 
                 Log.i("url", url);
 
-                if (url.contains("https://shadow.elemecdn.com/faas/h5/hongbao/hongbao.1bafaa2.js") && isGRT) {
-                    //mWebView.loadUrl("https://shadow.elemecdn.com/faas/h5/hongbao/hongbao.1bafaa2.js");
+                if (url.contains("https://shadow.elemecdn.com/faas/h5/hongbao/") && url.contains(".js") && isGRT) {
+                    mWebView.loadUrl(url);
                 }
 
 
@@ -93,12 +103,9 @@ public class WebViewFragment extends BaseFragment {
             @Override
             public boolean shouldOverrideUrlLoading(com.tencent.smtt.sdk.WebView view, String url) {
                 view.loadUrl(url);
-                if (url.contains("h5.ele.me/hongbao") && url.contains("code=")) {
-                    isGRT=true;
-                    mHandler.sendEmptyMessageDelayed(2, 1000);
-                }
                 if (url.contains("xui.ptlogin2.qq.com")) {
                     mHandler.sendEmptyMessageDelayed(1, 1000);
+
                 }
 
                 return true;
@@ -110,9 +117,13 @@ public class WebViewFragment extends BaseFragment {
         @JavascriptInterface
         public void showSource(String html) {
             Log.i("html", html);
-            if (html.contains("上海")) {
-                isGRT=false;
-                String a = html;
+            if (html.contains("看朋友们手气如何")) {
+                mWebView.loadUrl(url);
+                if (null != couponResult && test(html).size() > 0&& isResult) {
+                    couponResult.result(test(html));
+                    isResult=false;
+                }
+                isGRT = false;
             }
         }
     }
@@ -133,6 +144,7 @@ public class WebViewFragment extends BaseFragment {
             switch (msg.what) {
                 case 0:
                     mWebView.loadUrl(strJS);
+                    isGRT=true;
                     break;
                 case 1:
                     LoginByPassword(userName, passWord);
@@ -169,19 +181,26 @@ public class WebViewFragment extends BaseFragment {
         super.onDestroy();
     }
 
-    private void testHttp(String url) {
-        Map<String, Object> data = new HashMap<>();
-        CHZZClient.builder()
-                .params(data)
-                .url(url)
-                .success(new Success() {
-                    @Override
-                    public void onSuccess(Object entity) {
-                        Log.i("entity", entity.toString());
-                    }
-                })
-                .build()
-                .post();
+    private List<AccountEntity> test(String json) {
+        Document doc = Jsoup.parse(json);
+        Elements elements = doc.getElementsByTag("strong");
+        Elements elements1 = doc.getElementsByAttributeValue("style", "color: rgb(0, 120, 255);");
+        elements1 = elements1.removeAttr("strong");
+        for (int i = 0; i < elements1.size(); i++) {
+            Element e = elements1.get(i);
+            if (!e.text().contains("元")) {
+                elements1.remove(i);
+            }
+        }
+        List<AccountEntity> result = new ArrayList<>();
+        for (int a = 0; a < elements.size(); a++) {
+            Element link = elements.get(a);
+            Element link1 = elements1.get(a);
+            String linkText = link.text();
+            Log.i("linkText", linkText + ">>>" + link1.text());
+            result.add(new AccountEntity(linkText, link1.text()));
+        }
+        return result;
     }
 
 
