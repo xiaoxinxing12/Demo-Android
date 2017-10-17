@@ -17,14 +17,14 @@
         android:supportsRtl="true"
         android:name=".APP"
         android:theme="@style/AppBaseTheme">
-        <activity android:name=".view.activity.WebViewT">
+        <activity android:name=".view.activity.MyWebView">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.activity.InformationActivity" />
+        <activity android:name=".view.activity.WebViewT" android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -7,5 +7,6 @@
     <color name="line_color">#c2c2c2</color>
 
     <color name="rectangular_line">#B5B5B5</color>
-    <color name="colorPrimary1">#3da1ff</color>
+    <color name="colorPrimary1">#fc8b3b</color>
+    <color name="colorPrimary2">#12f948</color>
 </resources>

@@ -1,27 +1,24 @@
 package org.chzz.demo.view.activity;
 
 
-import android.support.v4.app.FragmentTransaction;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import org.chzz.adapter.CHZZOnItemChildClickListener;
 import org.chzz.adapter.CHZZOnRVItemClickListener;
 import org.chzz.adapter.CHZZViewHolderHelper;
 import org.chzz.demo.R;
 import org.chzz.demo.common.BaseActivity;
 import org.chzz.demo.common.CommonRecyclerAdapter;
 import org.chzz.demo.model.AccountEntity;
-import org.chzz.demo.model.CouponResult;
 import org.chzz.demo.uitl.ToastUtil;
-import org.chzz.demo.uitl.WebViewUtils;
 import org.chzz.demo.view.fragment.WebViewFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,13 +28,13 @@ import butterknife.OnClick;
  * Created by copy on 2017/10/16.
  */
 
-public class MyWebView extends BaseActivity implements CommonRecyclerAdapter.IFillDataListener<AccountEntity>, CHZZOnRVItemClickListener, CommonRecyclerAdapter.ItemChildListener, CouponResult, CHZZOnItemChildClickListener {
-    List<AccountEntity> account = new ArrayList<>();
+public class MyWebView extends BaseActivity implements CommonRecyclerAdapter.IFillDataListener<AccountEntity.DataEntity>, CHZZOnRVItemClickListener {
+    List<AccountEntity.DataEntity> account = new ArrayList<>();
     WebViewFragment fragment;
     int bigCoupon, index;
     @BindView(R.id.et_url)
     EditText etUrl;
-    private String url = "https://h5.ele.me/hongbao/#hardware_id=&is_lucky_group=True&lucky_number=9&track_id=&platform=4&sn=29d2d8d25eabdcde&theme_id=1449&device_id=";
+    private String url;
 
     @Override
 
@@ -50,82 +47,119 @@ public class MyWebView extends BaseActivity implements CommonRecyclerAdapter.IFi
     protected void setListener() {
         mRefreshLayout.setDelegate(this);
         mRefreshLayout.setPullDownRefreshEnable(false);
-        mAdapter = new CommonRecyclerAdapter(mDataRv, R.layout.item_info_adapter, null, null, this, this);
+        mAdapter = new CommonRecyclerAdapter(mDataRv, R.layout.item_info_adapter, null, null, this, null);
         initRefreshLayout(mDataRv, mRefreshLayout, mAdapter);
         mAdapter.setOnRVItemClickListener(this);
-        mAdapter.setOnItemChildClickListener(this);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         etUrl.setText(url);
         mTitle.setText("领红包助手");
-        account.add(new AccountEntity("3503564905", "a12345679", "copys1"));
-        account.add(new AccountEntity("2165702506", "a12345679", "copys2"));
-        account.add(new AccountEntity("3582207650", "a12345679", "copys3"));
+        account.add(new AccountEntity.DataEntity("3582207650", "a12345679", "copys"));
+        account.add(new AccountEntity.DataEntity("2165702506", "a12345679", "copys1"));
+        account.add(new AccountEntity.DataEntity("2655967705", "a12345679", "copys2"));
+        account.add(new AccountEntity.DataEntity("3503564905", "a12345679", "copys3"));
+        account.add(new AccountEntity.DataEntity("2821728287", "a12345679", "copy4", true));
+        account.add(new AccountEntity.DataEntity("1577115646", "a12345679", "copys5"));
+        account.add(new AccountEntity.DataEntity("3323125255", "a12345679", "copys7"));
         mAdapter.setData(account);
     }
 
     @OnClick(R.id.tv_all)
     public void onClick() {
-        String url = etUrl.getText().toString();
-        if (url.isEmpty() || !url.contains("lucky_number")) {
-            ToastUtil.show("请输入正确链接");
-            return;
-        }
-        Map<String, String> Param = WebViewUtils.URLRequest(url);
 
+        if (url == null || url.isEmpty()) {
+            initUrl();
+        }
+
+    }
+
+    private boolean initUrl() {
+        String Path = etUrl.getText().toString();
+        if (null == Path || Path.isEmpty() || !Path.contains("lucky_number")) {
+            ToastUtil.show("请输入正确链接");
+            return false;
+        }
+        url = Path;
         try {
-            String u = url;
-            u = u.substring(u.indexOf("lucky_number") + 13, u.length());
-            u = u.substring(0, u.indexOf("&"));
-            bigCoupon = Integer.parseInt(u);
+            Path = Path.substring(Path.indexOf("lucky_number") + 13, Path.length());
+            Path = Path.substring(0, Path.indexOf("&"));
+            bigCoupon = Integer.parseInt(Path);
         } catch (Exception e) {
 
         }
-
-
-        List<AccountEntity> result = null;
-        if (account.size() > 0) {
-            replace(account.get(index).getName(), account.get(index).getPassword());
-            //result = test(account.get(0).getName(), account.get(0).getPassword());
-        }
-
-
+        return true;
     }
 
-    private void replace(String userName, String passWord) {
-        if (null != fragment) {
-            fragment.onDestroy();
-            fragment = null;
-        }
-        // 开启Fragment事务
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        fragment = new WebViewFragment(this);
-        fragment.setInfo(userName, passWord);
-        transaction.replace(R.id.container, fragment).commit();
-    }
 
     @Override
     public void onRVItemClick(ViewGroup parent, View itemView, int position) {
-        AccountEntity accountEntity = (AccountEntity) mAdapter.getData().get(position);
-        replace(accountEntity.getName(), accountEntity.getPassword());
+        if (url == null || url.isEmpty()) {
+            if (!initUrl()) {
+                return;
+            }
+        }
+
+        final AccountEntity.DataEntity bean = (AccountEntity.DataEntity) mAdapter.getData().get(position);
+        if (bean.isImportant()) {
+            new AlertDialog.Builder(this)
+                    .setTitle("信息提醒")
+                    .setMessage("这个是你的大号哦")
+                    .setPositiveButton("取消", null)
+                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            goLogin(bean);
+                        }
+                    })
+                    .show();
+        } else {
+            goLogin(bean);
+        }
+
+    }
+
+    private void goLogin(AccountEntity.DataEntity bean) {
+        Intent intent = new Intent(this, WebViewT.class);
+        intent.putExtra("userName", bean.getName());
+        intent.putExtra("passWord", bean.getPassword());
+        intent.putExtra("url", url);
+        startActivityForResult(intent, 99);
     }
 
     @Override
-    public void setFillDataListener(CHZZViewHolderHelper chzzViewHolderHelper, int i, AccountEntity t) {
+    public void setFillDataListener(CHZZViewHolderHelper chzzViewHolderHelper, int i, AccountEntity.DataEntity t) {
 
+        if (t.isImportant()) {
+            chzzViewHolderHelper.setBackgroundColor(R.id.ll, getResources().getColor(R.color.colorPrimary1));
+            chzzViewHolderHelper.setTextColor(R.id.tv_nick, getResources().getColor(R.color.white));
+            chzzViewHolderHelper.setTextColor(R.id.tv_name, getResources().getColor(R.color.white));
+            chzzViewHolderHelper.setTextColor(R.id.tv_coupon, getResources().getColor(R.color.white));
+        }
+
+        chzzViewHolderHelper.setText(R.id.tv_get, (t.getCoupon() == null || !t.getCoupon().contains("元") ? "未领" : "已领"));
+        chzzViewHolderHelper.setBackgroundColor(R.id.tv_get, getResources().getColor((t.getCoupon() == null || !t.getCoupon().contains("元") ? R.color.colorPrimary : R.color.colorPrimary2)));
         chzzViewHolderHelper.setText(R.id.tv_nick, t.getNick())
                 .setText(R.id.tv_name, t.getName())
                 .setText(R.id.tv_coupon, t.getCoupon() == null ? "" : t.getCoupon());
     }
 
+
     @Override
-    public void result(List<AccountEntity> result) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (resultCode != 100) {
+            return;
+        }
+        AccountEntity beans = (AccountEntity) data.getSerializableExtra("bean");
+        List<AccountEntity.DataEntity> result = beans.getList();
         if (null != result) {
-            for (AccountEntity bean : account) {
-                for (AccountEntity resultBean : result) {
+            for (AccountEntity.DataEntity resultBean : result) {
+                for (AccountEntity.DataEntity bean : account) {
                     if (bean.getNick().equals(resultBean.getNick())) {
                         bean.setCoupon(resultBean.getCoupon());
                         continue;
+                    } else if(null==bean.getCoupon()) {
+                        bean.setCoupon("未领");
                     }
                 }
             }
@@ -139,22 +173,13 @@ public class MyWebView extends BaseActivity implements CommonRecyclerAdapter.IFi
             if (result.size() == bigCoupon - 1) {
                 new AlertDialog.Builder(this)
                         .setTitle("信息提醒")
-                        .setMessage("大红包要来了，是否使用Copy4领取")
+                        .setMessage("大红包要来了，下一个将是大红包")
                         .setPositiveButton("确定", null)
                         .show();
             }
             mAdapter.setData(account);
             index = index + 1;
         }
-    }
-
-    @Override
-    public void onItemChildClick(ViewGroup parent, View childView, int position) {
-
-    }
-
-    @Override
-    public void setItemChildListener(CHZZViewHolderHelper chzzViewHolderHelper) {
-        chzzViewHolderHelper.setItemChildClickListener(R.id.tv_get);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

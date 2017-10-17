@@ -2,127 +2,114 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/line_color"
     android:orientation="vertical">
 
     <include layout="@layout/common_toolbar" />
 
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:focusable="true"
         android:focusableInTouchMode="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@color/white"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-            <LinearLayout
+            <EditText
+                android:id="@+id/et_url"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:layout_margin="@dimen/common_margin_10"
+                android:layout_weight="1"
+                android:background="@drawable/et_user_authentication_selector"
+                android:hint="输入红包地址"
+                android:padding="@dimen/common_margin_5"
+                android:singleLine="true"
+                android:textSize="@dimen/m_font" />
 
-                <EditText
-                    android:singleLine="true"
-                    android:id="@+id/et_url"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/common_margin_10"
-                    android:layout_weight="1"
-                    android:background="@drawable/et_user_authentication_selector"
-                    android:hint="输入红包地址"
-                    android:padding="@dimen/common_margin_5"
-                    android:textSize="@dimen/m_font" />
-
-                <TextView
-                    android:id="@+id/tv_all"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/common_margin_8"
-                    android:background="@drawable/selector_blue_1"
-                    android:paddingBottom="@dimen/common_margin_5"
-                    android:paddingLeft="@dimen/common_margin_10"
-                    android:paddingRight="@dimen/common_margin_10"
-                    android:paddingTop="@dimen/common_margin_5"
-                    android:text="一键领取"
-                    android:textColor="@color/white" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/colorPrimary" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/tv_all"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/common_margin_5"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="昵称" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="账号" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="红包" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="状态" />
-
-
-            </LinearLayout>
-
-            <org.chzz.refresh.CHZZRefreshLayout
-                android:id="@+id/refreshLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rvData"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:scrollbarSize="3dp"
-                    android:scrollbarStyle="outsideOverlay"
-                    android:scrollbarThumbVertical="@color/colorPrimary"
-                    android:scrollbars="vertical">
-
-                </android.support.v7.widget.RecyclerView>
-            </org.chzz.refresh.CHZZRefreshLayout>
+                android:layout_marginRight="@dimen/common_margin_8"
+                android:background="@drawable/selector_blue_1"
+                android:paddingBottom="@dimen/common_margin_5"
+                android:paddingLeft="@dimen/common_margin_10"
+                android:paddingRight="@dimen/common_margin_10"
+                android:paddingTop="@dimen/common_margin_5"
+                android:text="一键领取"
+                android:textColor="@color/white" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/common_margin_10"
-            android:background="@color/line_color" />
+            android:layout_height="1dp"
+            android:background="@color/colorPrimary" />
 
         <LinearLayout
-            android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical"></LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common_margin_5"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="昵称" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="账号" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="红包" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="状态" />
+
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/colorPrimary" />
+        <org.chzz.refresh.CHZZRefreshLayout
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvData"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:scrollbarSize="3dp"
+                android:scrollbarStyle="outsideOverlay"
+                android:scrollbarThumbVertical="@color/colorPrimary"
+                android:scrollbars="vertical">
+
+            </android.support.v7.widget.RecyclerView>
+        </org.chzz.refresh.CHZZRefreshLayout>
     </LinearLayout>
+
 </LinearLayout>

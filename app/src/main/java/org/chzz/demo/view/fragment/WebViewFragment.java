@@ -198,7 +198,7 @@ public class WebViewFragment extends BaseFragment {
             Element link1 = elements1.get(a);
             String linkText = link.text();
             Log.i("linkText", linkText + ">>>" + link1.text());
-            result.add(new AccountEntity(linkText, link1.text()));
+           // result.add(new AccountEntity(linkText, link1.text()));
         }
         return result;
     }
