@@ -3,6 +3,8 @@ package org.chzz.demo.view.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +34,7 @@ public class MyWebView extends BaseActivity implements CommonRecyclerAdapter.IFi
     List<AccountEntity.DataEntity> account = new ArrayList<>();
     WebViewFragment fragment;
     int bigCoupon, index;
+    boolean isAuto;
     @BindView(R.id.et_url)
     EditText etUrl;
     private String url;
@@ -60,7 +63,10 @@ public class MyWebView extends BaseActivity implements CommonRecyclerAdapter.IFi
         account.add(new AccountEntity.DataEntity("3503564905", "a12345679", "copys3"));
         account.add(new AccountEntity.DataEntity("2821728287", "a12345679", "copy4", true));
         account.add(new AccountEntity.DataEntity("1577115646", "a12345679", "copys5"));
+        account.add(new AccountEntity.DataEntity("3043546670", "a123456789", "copys6"));
         account.add(new AccountEntity.DataEntity("3323125255", "a12345679", "copys7"));
+        account.add(new AccountEntity.DataEntity("3096325476", "a12345679", "copys8"));
+        account.add(new AccountEntity.DataEntity("2941198802", "a12345679", "copys9"));
         mAdapter.setData(account);
     }
 
@@ -70,6 +76,9 @@ public class MyWebView extends BaseActivity implements CommonRecyclerAdapter.IFi
         if (url == null || url.isEmpty()) {
             initUrl();
         }
+        isAuto = true;
+        index = 0;
+        mHandler.sendEmptyMessageDelayed(0, 1000);
 
     }
 
@@ -98,7 +107,8 @@ public class MyWebView extends BaseActivity implements CommonRecyclerAdapter.IFi
                 return;
             }
         }
-
+        index = 0;
+        isAuto = false;
         final AccountEntity.DataEntity bean = (AccountEntity.DataEntity) mAdapter.getData().get(position);
         if (bean.isImportant()) {
             new AlertDialog.Builder(this)
@@ -119,6 +129,11 @@ public class MyWebView extends BaseActivity implements CommonRecyclerAdapter.IFi
     }
 
     private void goLogin(AccountEntity.DataEntity bean) {
+        if (isAuto && bean.isImportant()) {
+            ToastUtil.show("一键刷，跳过主账号");
+            mHandler.sendEmptyMessageDelayed(0, 1000);
+            return;
+        }
         Intent intent = new Intent(this, WebViewT.class);
         intent.putExtra("userName", bean.getName());
         intent.putExtra("passWord", bean.getPassword());
@@ -128,6 +143,12 @@ public class MyWebView extends BaseActivity implements CommonRecyclerAdapter.IFi
 
     @Override
     public void setFillDataListener(CHZZViewHolderHelper chzzViewHolderHelper, int i, AccountEntity.DataEntity t) {
+
+        if (index == i) {
+            chzzViewHolderHelper.setBackgroundColor(R.id.ll, getResources().getColor(R.color.line_color1));
+        } else {
+            chzzViewHolderHelper.setBackgroundRes(R.id.ll, R.drawable.selector_item);
+        }
 
         if (t.isImportant()) {
             chzzViewHolderHelper.setBackgroundColor(R.id.ll, getResources().getColor(R.color.colorPrimary1));
@@ -158,12 +179,13 @@ public class MyWebView extends BaseActivity implements CommonRecyclerAdapter.IFi
                     if (bean.getNick().equals(resultBean.getNick())) {
                         bean.setCoupon(resultBean.getCoupon());
                         continue;
-                    } else if(null==bean.getCoupon()) {
+                    } else if (null == bean.getCoupon()) {
                         bean.setCoupon("未领");
                     }
                 }
             }
-            if (result.size() >= bigCoupon) {
+            mAdapter.setData(account);
+            if (result.size() >= bigCoupon && 1 == 2) {
                 new AlertDialog.Builder(this)
                         .setTitle("信息提醒")
                         .setMessage("大红包已被领走")
@@ -173,13 +195,33 @@ public class MyWebView extends BaseActivity implements CommonRecyclerAdapter.IFi
             if (result.size() == bigCoupon - 1) {
                 new AlertDialog.Builder(this)
                         .setTitle("信息提醒")
-                        .setMessage("大红包要来了，下一个将是大红包")
+                        .setMessage("大红包要来了，下一个将是大红包，手动领吧！")
                         .setPositiveButton("确定", null)
                         .show();
+                return;
             }
-            mAdapter.setData(account);
-            index = index + 1;
+            if (isAuto) {
+                mHandler.sendEmptyMessageDelayed(0, 1000);
+            }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    if (index < account.size()) {
+                        goLogin(account.get(index));
+                        index = index + 1;
+                    } else {
+                        ToastUtil.show("刷完");
+                    }
+
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    };
 }
