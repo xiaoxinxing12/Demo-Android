@@ -8,7 +8,6 @@ import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.EditText;
 
 import org.chzz.adapter.CHZZOnRVItemClickListener;
@@ -43,9 +42,6 @@ public class MyWebView extends BaseActivity implements CommonRecyclerAdapter.IFi
     @Override
 
     protected void initView() {
-        getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
-                        | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         setContentView(R.layout.activity_webview);
         ButterKnife.bind(this);
     }
