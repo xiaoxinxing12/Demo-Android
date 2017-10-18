@@ -8,6 +8,7 @@ import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.EditText;
 
 import org.chzz.adapter.CHZZOnRVItemClickListener;
@@ -42,6 +43,9 @@ public class MyWebView extends BaseActivity implements CommonRecyclerAdapter.IFi
     @Override
 
     protected void initView() {
+        getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
+                        | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         setContentView(R.layout.activity_webview);
         ButterKnife.bind(this);
     }
@@ -57,16 +61,26 @@ public class MyWebView extends BaseActivity implements CommonRecyclerAdapter.IFi
 
         etUrl.setText(url);
         mTitle.setText("饱了吧红包助手");
-        account.add(new AccountEntity.DataEntity("3582207650", "a12345679", "copys"));
-        account.add(new AccountEntity.DataEntity("2165702506", "a12345679", "copys1"));
-        account.add(new AccountEntity.DataEntity("2655967705", "a12345679", "copys2"));
-        account.add(new AccountEntity.DataEntity("3503564905", "a12345679", "copys3"));
-        account.add(new AccountEntity.DataEntity("2821728287", "a12345679", "copy4", true));
-        account.add(new AccountEntity.DataEntity("1577115646", "a12345679", "copys5"));
-        account.add(new AccountEntity.DataEntity("3043546670", "a123456789", "copys6"));
-        account.add(new AccountEntity.DataEntity("3323125255", "a12345679", "copys7"));
-        account.add(new AccountEntity.DataEntity("3096325476", "a12345679", "copys8"));
-        account.add(new AccountEntity.DataEntity("2941198802", "a12345679", "copys9"));
+//        account.add(new AccountEntity.DataEntity("3582207650", "a12345679", "copys"));
+//        account.add(new AccountEntity.DataEntity("2165702506", "a12345679", "copys1"));
+//        account.add(new AccountEntity.DataEntity("2655967705", "a12345679", "copys2"));
+//        account.add(new AccountEntity.DataEntity("3503564905", "a12345679", "copys3"));
+//        account.add(new AccountEntity.DataEntity("2821728287", "a12345679", "copy4", true));
+//        account.add(new AccountEntity.DataEntity("1577115646", "a12345679", "copys5"));
+//        account.add(new AccountEntity.DataEntity("3043546670", "a123456789", "copys6"));
+//        account.add(new AccountEntity.DataEntity("3323125255", "a12345679", "copys7"));
+//        account.add(new AccountEntity.DataEntity("3096325476", "a12345679", "copys8"));
+//        account.add(new AccountEntity.DataEntity("2941198802", "a12345679", "copys9"));
+
+        account.add(new AccountEntity.DataEntity("2670241357", "lc3861299", "桃花笑春风"));
+        account.add(new AccountEntity.DataEntity("3559438883", "lc3861299", "岐女子"));
+        account.add(new AccountEntity.DataEntity("1950159191", "lc3861299", "人面何处去"));
+        account.add(new AccountEntity.DataEntity("3449562632", "lc3861299", "桃花坞"));
+        account.add(new AccountEntity.DataEntity("3491506022", "lc3861299", "桃花庵", true));
+        account.add(new AccountEntity.DataEntity("3361528726", "lc3861299", "无花"));
+        account.add(new AccountEntity.DataEntity("2907915379", "lc3861299", "无草"));
+        account.add(new AccountEntity.DataEntity("2125489148", "lc3861299", "桃花仙"));
+        account.add(new AccountEntity.DataEntity("3357419910", "lc3861299", "丝方尽"));
         mAdapter.setData(account);
     }
 
